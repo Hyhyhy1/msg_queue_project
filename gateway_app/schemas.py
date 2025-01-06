@@ -25,13 +25,13 @@ class SMSNotification(BaseModel):
         return v
 
 
-class PushNotification(BaseModel):
-    type: str = Field("push")
-    recipient: str
+class TelegramNotification(BaseModel):
+    type: str = Field("telegram")
+    recipient: int
     message: str
 
     @field_validator('type')
     def check_type(cls, v):
-        if v != "push":
-            raise ValueError('type must be "push"')
+        if v != "telegram":
+            raise ValueError('type must be "telegram"')
         return v

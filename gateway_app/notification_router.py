@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from schemas import EmailNotification, SMSNotification, PushNotification
-from services import send_notification
+from gateway_app.schemas import EmailNotification, SMSNotification, TelegramNotification
+from gateway_app.services import send_notification
 
 router = APIRouter()
 
@@ -20,10 +20,10 @@ async def send_sms(notification: SMSNotification):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.post("/send_push/")
-async def send_push(notification: PushNotification):
+@router.post("/send_telegram_msg/")
+async def send_telegram_msg(notification: TelegramNotification):
     try:
         send_notification(notification)
-        return {"message": "Push notification sent"}
+        return {"message": "Telegram notification sent"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
